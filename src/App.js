@@ -6,7 +6,7 @@ const { Dragger } = Upload;
 const props = {
   name: 'file',
   multiple: true,
-  action: 'https://localhost:8080/readExcel/basicSalary/upload',
+  action: 'http://localhost:8080/readExcel/basicSalary/upload',
 
   onChange(info) {
     const { status } = info.file;
