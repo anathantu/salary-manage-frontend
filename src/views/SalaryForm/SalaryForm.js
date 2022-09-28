@@ -1,6 +1,6 @@
 import { Button, Form, Input, Select } from 'antd';
 import React from 'react';
-import App from './App';
+import Uploader from '../../component/Uploader';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -20,24 +20,9 @@ const tailLayout = {
 class SalaryForm extends React.Component {
   formRef = React.createRef();
   onGenderChange = (value) => {
-    switch (value) {
-      case 'male':
-        this.formRef.current.setFieldsValue({
-          note: 'Hi, man!',
-        });
-        return;
-
-      case 'female':
-        this.formRef.current.setFieldsValue({
-          note: 'Hi, lady!',
-        });
-        return;
-
-      case 'other':
-        this.formRef.current.setFieldsValue({
-          note: 'Hi there!',
-        });
-    }
+    this.formRef.current.setFieldsValue({
+      type: value,
+    });
   };
   onFinish = (values) => {
     console.log(values);
@@ -56,8 +41,8 @@ class SalaryForm extends React.Component {
     return (
       <Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.onFinish}>
         <Form.Item
-          name="gender"
-          label="Gender"
+          name="type"
+          label="薪酬统计类型"
           rules={[
             {
               required: true,
@@ -76,20 +61,20 @@ class SalaryForm extends React.Component {
         </Form.Item>
         <Form.Item
           noStyle
-          shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
+          shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type}
         >
           {({ getFieldValue }) =>
-            getFieldValue('gender')  ? (
+            getFieldValue('type')  ? (
               <Form.Item
-                name="customizeGender"
-                label="Customize Gender"
+                name="customizeType"
+                label="请导入对应类型的数据文件"
                 rules={[
                   {
                     required: true,
                   },
                 ]}
               >
-                <App/>
+                <Uploader type={getFieldValue('type')}/>
               </Form.Item>
             ) : null
           }
