@@ -1,6 +1,8 @@
 import { Button, Form, Input, Select } from 'antd';
 import React from 'react';
 import Uploader from '../../component/Uploader';
+import './index.css';
+
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -29,12 +31,6 @@ class SalaryForm extends React.Component {
   };
   onReset = () => {
     this.formRef.current.resetFields();
-  };
-  onFill = () => {
-    this.formRef.current.setFieldsValue({
-      note: 'Hello world!',
-      gender: 'male',
-    });
   };
 
   render() {
@@ -82,12 +78,6 @@ class SalaryForm extends React.Component {
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
             Submit
-          </Button>
-          <Button htmlType="button" onClick={this.onReset}>
-            Reset
-          </Button>
-          <Button type="link" htmlType="button" onClick={this.onFill}>
-            Fill form
           </Button>
         </Form.Item>
       </Form>

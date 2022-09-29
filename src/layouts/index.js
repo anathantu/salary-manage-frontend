@@ -22,98 +22,91 @@
 
 // export default BasicLayout;
 
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu ,Icon} from 'antd';
+import { Breadcrumb, Layout, Menu, Typography } from 'antd';
 import React from 'react';
-import './index'
-import SalaryForm from '../views/SalaryForm/SalaryForm';
-import { Link } from 'react-router-dom';
+import Logo from './Logo';
+import './index.css';
+import { Link, Route, Redirect, Switch } from 'react-router-dom';
+import { routes } from '../configs/routeMap';
 
 const { Header, Content, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
-const items1 = ['1', '2', '3'].map((key) => ({
-    key,
-    label: `nav ${key}`,
-}));
-const items2 = [UserOutlined].map((icon, index) => {
-    const key = String(index + 1);
-    return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: `subnav ${key}`,
-        children: new Array(4).fill(null).map((_, j) => {
-            const subKey = index * 4 + j + 1;
-            return {
-                key: subKey,
-                label: `option${subKey}`,
-            };
-        }),
-    };
-});
+const { Title } = Typography;
 
 const BasicLayout = () => (
-    <Layout>
-        <Header className="header">
-            <div className="logo" />
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-        </Header>
-        <Layout>
-            <Sider width={200} className="site-layout-background">
-                <Menu
-                    mode="inline"
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
-                    style={{
-                        height: '100%',
-                        borderRight: 0,
-                    }}
-                    items={items2}
-                />
-                <Menu defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline"
-                    theme="dark"
-                     >
-                    <SubMenu key="sub1" title="test" >
-                        <Menu.Item key="1" >
-                            <Link to="/userList" > 用户列表 </Link>
-                        </Menu.Item>
-                        <Menu.Item key="2" >
-                            <Link to="/form" >表格 </Link>
-                        </Menu.Item>
-                    </SubMenu>
-                </Menu>
-            </Sider>
-            <Layout
+    <Layout style={{ minHeight: "100vh" }}>
+
+        <Sider className="site-layout-background" style={{ zIndex: "10" }}>
+            <div>
+                <h1 className="sidebar-title">薪酬管理系统</h1>
+            </div>
+            <Menu defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline"
+                theme="dark"
+            >
+                <SubMenu key="sub1" title="薪酬统计" >
+                    <Menu.Item key="1" >
+                        <Link to="/form" >薪酬数据导入 </Link>
+                    </Menu.Item>
+                    <Menu.Item key="2" >
+                        <Link to="/userList" > 用户列表 </Link>
+                    </Menu.Item>
+                </SubMenu>
+            </Menu>
+        </Sider>
+
+        <Layout
+            className="site-layout"
+            style={{
+                marginLeft: 20,
+
+            }}
+        >
+            {/* <Header
+                className="site-layout-background"
                 style={{
-                    padding: '0 24px 24px',
+                    padding: 0,
+                }}>
+                    <div style={{marginLeft:20}}></div>
+            </Header> */}
+            <Breadcrumb
+                style={{
+                    margin: '16px 0',
                 }}
             >
-                <Breadcrumb
-                    style={{
-                        margin: '16px 0',
-                    }}
-                >
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb>
-                <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-
-                    }}
-                >
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+            </Breadcrumb>
+            <Content
+                className="site-layout-background"
+                style={{
+                    padding: 24,
+                    margin: 0,
+                    minHeight: 280
+                }}
+            >
+                <Switch>
                     <div style={{
-                        padding: 24,
-                        background: '#fff',
-                        minHeight: 360
-                    }} >
-                        <SalaryForm />
+                                display: 'flex',            
+                                display: '-webkit-flex',            
+                                justifyContent: 'center',            
+                                alignItems: 'center'
+                    }}>
+                        {
+                            routes.map((route) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        key={route.path}
+                                        component={route.component} />
+                                );
+                            })
+                        }
+                        <Redirect to="/error/404" />
                     </div>
-                </Content>
-            </Layout>
+
+                </Switch>
+            </Content>
         </Layout>
     </Layout>
 );
