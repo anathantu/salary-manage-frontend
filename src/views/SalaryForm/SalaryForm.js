@@ -50,8 +50,8 @@ class SalaryForm extends React.Component {
             onChange={this.onGenderChange}
             allowClear
           >
-            <Option value="basicSalary">基础薪资</Option>
-            <Option value="performance">绩效工资</Option>
+            <Option value="salary">基础薪资</Option>
+            <Option value="performanceBonus">绩效工资</Option>
             <Option value="specialAward">专项奖</Option>
           </Select>
         </Form.Item>
