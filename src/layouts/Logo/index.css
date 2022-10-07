@@ -1,0 +1,23 @@
+.logo {
+  float: left;
+  /* margin: 16px 24px 16px 16px;  */
+  display: inline;
+}
+
+
+.img-logo{
+  display: inline;
+  width: 12%;
+}
+
+.sidebar-title {
+  display: inline;
+  text-align: center;
+  margin: 10px;
+  color: #fff;
+  font-weight: 600;
+  line-height: 50px;
+  font-size: 19px;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+}

@@ -35,63 +35,37 @@ const { Title } = Typography;
 
 const BasicLayout = () => (
     <Layout style={{ minHeight: "100vh" }}>
+        <Header>
+            <Logo/>
+        </Header>
+        <Layout>
+            <Sider theme="light">
+                <Menu defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
+                    <SubMenu key="sub1" title="薪酬统计" >
+                        <Menu.Item key="1" >
+                            <Link to="/form" >薪酬数据导入 </Link>
+                        </Menu.Item>
+                        <Menu.Item key="2" >
+                            <Link to="/userList" > 用户列表 </Link>
+                        </Menu.Item>
+                    </SubMenu>
+                </Menu>
+            </Sider>
 
-        <Sider className="site-layout-background" style={{ zIndex: "10" }}>
-            <div>
-                <h1 className="sidebar-title">薪酬管理系统</h1>
-            </div>
-            <Menu defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline"
-                theme="dark"
-            >
-                <SubMenu key="sub1" title="薪酬统计" >
-                    <Menu.Item key="1" >
-                        <Link to="/form" >薪酬数据导入 </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2" >
-                        <Link to="/userList" > 用户列表 </Link>
-                    </Menu.Item>
-                </SubMenu>
-            </Menu>
-        </Sider>
-
-        <Layout
-            className="site-layout"
-            style={{
-                marginLeft: 20,
-
-            }}
-        >
-            {/* <Header
-                className="site-layout-background"
+            <Layout
                 style={{
-                    padding: 0,
-                }}>
-                    <div style={{marginLeft:20}}></div>
-            </Header> */}
-            <Breadcrumb
-                style={{
-                    margin: '16px 0',
+                    marginLeft: 20,
                 }}
+                
             >
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
-            <Content
-                className="site-layout-background"
-                style={{
-                    padding: 24,
-                    margin: 0,
-                    minHeight: 280
-                }}
-            >
-                <Switch>
-                    <div style={{
-                                display: 'flex',            
-                                display: '-webkit-flex',            
-                                justifyContent: 'center',            
-                                alignItems: 'center'
-                    }}>
+                <Content
+                    style={{
+                        padding: "24px",
+                        margin: "0 auto"
+                    }}
+                    className="site-layout-background"
+                >
+                    <Switch>
                         {
                             routes.map((route) => {
                                 return (
@@ -103,11 +77,12 @@ const BasicLayout = () => (
                             })
                         }
                         <Redirect to="/error/404" />
-                    </div>
-
-                </Switch>
-            </Content>
+                    </Switch>
+                </Content>
+            </Layout>
         </Layout>
+
+
     </Layout>
 );
 

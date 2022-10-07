@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "../../assets/images/logo.svg";
-import "./index.less";
+import logo from "../../assets/images/logo.jpg";
+import "./index.css";
 const Logo = () => {
   return (
-    <div className="sidebar-logo-container">
-      <img src={logo} className="sidebar-logo" alt="logo" />
+    <div className="logo" >
+      <img src={logo} className="img-logo" alt="logo" />
       <h1 className="sidebar-title">薪酬管理系统</h1>
     </div>
   );
