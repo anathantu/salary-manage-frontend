@@ -46,7 +46,7 @@ const BasicLayout = () => (
                             <Link to="/form" >薪酬数据导入 </Link>
                         </Menu.Item>
                         <Menu.Item key="2" >
-                            <Link to="/userList" > 用户列表 </Link>
+                            <Link to="/userList" > 薪酬数据查询 </Link>
                         </Menu.Item>
                     </SubMenu>
                 </Menu>
