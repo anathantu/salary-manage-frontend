@@ -1,8 +1,4 @@
 import axios from "axios";
-import store from "@/store";
-import { Modal } from "antd";
-import { getToken } from "@/utils/auth";
-import { logout } from "@/store/actions";
 
 //创建一个axios示例
 const request = axios.create({

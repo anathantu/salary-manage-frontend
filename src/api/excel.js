@@ -2,7 +2,7 @@ import request from "../utils/request"
 
 export function statistic(year) {
   return request({
-    url: '/'+year+'/statistic',
+    url: '/salaryStatistics/'+year+'/statistic',
     method: 'get'
   })
 }
