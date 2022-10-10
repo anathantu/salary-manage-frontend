@@ -1,6 +1,6 @@
 import { Button, Form, Input, Select } from 'antd';
 import React from 'react';
-import Uploader from '../../component/Uploader';
+import Uploader from '../Uploader';
 import './index.css';
 
 const { Option } = Select;
@@ -60,7 +60,7 @@ class SalaryForm extends React.Component {
           shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type}
         >
           {({ getFieldValue }) =>
-            getFieldValue('type')  ? (
+            getFieldValue('type') ? (
               <Form.Item
                 name="customizeType"
                 label="请导入对应类型的数据文件"
@@ -70,15 +70,10 @@ class SalaryForm extends React.Component {
                   },
                 ]}
               >
-                <Uploader type={getFieldValue('type')}/>
+                <Uploader type={getFieldValue('type')} />
               </Form.Item>
             ) : null
           }
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
         </Form.Item>
       </Form>
     );

@@ -15,9 +15,9 @@ const defaultProps = {
     }
 
     if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
+      message.success(`${info.file.name} 文件上传成功`);
     } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
+      message.error(`${info.file.name} 文件上传失败`);
     }
   },
 
@@ -35,10 +35,9 @@ const Uploader = (props) => {
     <p className="ant-upload-drag-icon">
       <InboxOutlined />
     </p>
-    <p className="ant-upload-text">Click or drag file to this area to upload</p>
+    <p className="ant-upload-text">点击或拖动文件进行上传</p>
     <p className="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
+    支持批量上传，但请勿重复上传数据，否则薪酬统计时数据会出现错误
     </p>
   </Dragger>);
 };

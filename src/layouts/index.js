@@ -1,27 +1,3 @@
-// import React from 'react';
-// import {Layout} from 'antd';
-
-// const { Header,Footer,Sider,Content}=Layout;
-
-// const BasicLayout=()=>{
-//     return (
-//         <Layout>
-//             <Sider>Sider</Sider>
-//             <Layout>
-//                 <Header>
-//                     Header
-//                 </Header>
-//                 <Content>
-//                     Content
-//                 </Content>
-//             </Layout>
-//         </Layout>
-
-//     );
-// }
-
-// export default BasicLayout;
-
 import { Breadcrumb, Layout, Menu, Typography } from 'antd';
 import React from 'react';
 import Logo from './Logo';

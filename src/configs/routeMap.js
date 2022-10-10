@@ -1,4 +1,4 @@
-import SalaryForm from "../views/SalaryForm/SalaryForm"
+import UploadExcels from "../views/uploadExcels/uploadExcels"
 import UserList from "../views/UserList"
 import NotFound from "../views/error/404"
 
@@ -6,7 +6,7 @@ import NotFound from "../views/error/404"
 export const routes = [
     {
         path: '/form',
-        component: SalaryForm 
+        component: UploadExcels 
     },
     {
         path: '/userList',
