@@ -4,6 +4,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import './index.css';
 import request from "../../utils/request.js"
 import { statistic } from "../../api/excel";
+import { useState } from "react";
 
 
 const openNotificationWithIcon = (type) => {
@@ -20,7 +21,7 @@ const openNotificationWithIcon = (type) => {
                 '薪酬统计失败，请确认数据是否都上传和时间是否选择了',
         }
     }
-    
+
     notification[type](config[type]);
 };
 
@@ -28,12 +29,21 @@ const UploadExcels = () => {
 
     var year
 
+    const [loadings, setLoadings] = useState(false)
+
     const onClick = () => {
+        setLoadings(true);
+
         statistic(year).then((response) => {
             openNotificationWithIcon('success')
-        }).catch((errror) => {
+        }).catch((error) => {
             openNotificationWithIcon('error')
+        }).finally(()=>{
+            setTimeout(() => {
+                setLoadings(false);
+            }, 0);
         })
+
     }
 
     const dateChange = (date, dateString) => {
@@ -58,7 +68,7 @@ const UploadExcels = () => {
                     <Space direction="vertical" size="middle">
                         <DatePicker onChange={dateChange} picker="year" />
                         <div className="statistic-button">
-                            <Button type="primary" icon={<DownloadOutlined />} size={"middle"} onClick={onClick}>
+                            <Button type="primary" icon={<DownloadOutlined />} size={"middle"} onClick={onClick} loading={loadings}>
                                 导出统计数据
                             </Button>
                         </div>
