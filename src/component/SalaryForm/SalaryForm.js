@@ -53,6 +53,10 @@ class SalaryForm extends React.Component {
             <Option value="salary">基础薪资</Option>
             <Option value="performanceBonus">绩效工资</Option>
             <Option value="specialAward">专项奖</Option>
+            <Option value="insurance">五险</Option>
+            <Option value="annuity">年金</Option>
+            <Option value="providentFund">公积金</Option>
+            
           </Select>
         </Form.Item>
         <Form.Item
