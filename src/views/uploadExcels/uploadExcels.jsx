@@ -4,6 +4,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import './index.css';
 import request from "../../utils/request.js"
 import { statistic } from "../../api/excel";
+import { deleteAllData } from "../../api/data"
 import { useState } from "react";
 
 
@@ -25,35 +26,86 @@ const openNotificationWithIcon = (type) => {
     notification[type](config[type]);
 };
 
+const deleteAllNotification= (type) => {
+
+    const config = {
+        'success': {
+            message: '删除数据成功',
+            description:
+                '删除数据成功，可以重新导入数据了',
+        },
+        'error': {
+            message: '删除数据失败',
+            description:
+                '删除数据失败',
+        }
+    }
+
+    notification[type](config[type]);
+};
+
 const UploadExcels = () => {
 
-    var year
+    const [loadings, setLoadings] = useState([])
 
-    const [loadings, setLoadings] = useState(false)
+    const [date,setDate] = useState()
 
-    const onClick = () => {
-        setLoadings(true);
+    const onClick = (index) => {
+        setLoadings((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = true;
+            return newLoadings;
+        });
 
-        statistic(year).then((response) => {
+        statistic(date).then((response) => {
             openNotificationWithIcon('success')
         }).catch((error) => {
             openNotificationWithIcon('error')
-        }).finally(()=>{
+        }).finally(() => {
             setTimeout(() => {
-                setLoadings(false);
+                setLoadings((prevLoadings) => {
+                    const newLoadings = [...prevLoadings];
+                    newLoadings[index] = false;
+                    return newLoadings;
+                });
             }, 0);
         })
 
     }
 
     const dateChange = (date, dateString) => {
-        console.log(date, dateString);
-        year = dateString
-    };
+        setDate(dateString)
+    }
+
+    const deleteAll = (index) => {
+        setLoadings((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = true;
+            return newLoadings;
+        });
+
+
+        deleteAllData().then((response) => {
+            if(response.data==true)
+                deleteAllNotification('success')
+            else
+                deleteAllNotification('error')
+        }).catch((error) => {
+            deleteAllNotification('error')
+        }).finally(() => {
+            setTimeout(() => {
+                setLoadings((prevLoadings) => {
+                    const newLoadings = [...prevLoadings];
+                    newLoadings[index] = false;
+                    return newLoadings;
+                });
+            }, 0);
+        })
+    }
 
     return (
 
-        <div style={{ backgroundColor: "#fff", height: "40vw", width: "50vw", padding: "5vw" }}>
+        <div style={{ backgroundColor: "#fff",height: "100%", width: "50vw", padding: "5vw" }}>
             <Space
                 direction="vertical"
                 size="large"
@@ -63,12 +115,23 @@ const UploadExcels = () => {
                 </div>
                 <Space direction="horizontal" align="start" size="middle">
                     <Space>
+                        <span style={{ fontWeight: 600 }}>清空导入的数据:</span>
+                    </Space>
+                    <Space>
+                        <Button type="primary" danger onClick={() => deleteAll(0)} loading={loadings[0]}>
+                            数据清零
+                        </Button>
+                    </Space>
+                </Space>
+                <Space direction="horizontal" align="start" size="middle">
+                    <Space>
                         <span style={{ fontWeight: 600 }}>进行薪酬数据统计并导出:</span>
                     </Space>
                     <Space direction="vertical" size="middle">
                         <DatePicker onChange={dateChange} picker="year" />
                         <div className="statistic-button">
-                            <Button type="primary" icon={<DownloadOutlined />} size={"middle"} onClick={onClick} loading={loadings}>
+                            <Button type="primary" icon={<DownloadOutlined />} size={"middle"}
+                                onClick={() => onClick(1)} loading={loadings[1]}>
                                 导出统计数据
                             </Button>
                         </div>
