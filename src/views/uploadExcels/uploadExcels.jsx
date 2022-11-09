@@ -1,9 +1,9 @@
 import SalaryForm from "../../component/SalaryForm/SalaryForm";
-import { Button, DatePicker, Space, notification } from "antd";
+import { Button, DatePicker, Space, notification, Radio } from "antd";
 import { DownloadOutlined } from '@ant-design/icons';
 import './index.css';
 import request from "../../utils/request.js"
-import { statistic } from "../../api/excel";
+import { statistic, splitStatistic } from "../../api/excel";
 import { deleteAllData } from "../../api/data"
 import { useState } from "react";
 
@@ -26,7 +26,7 @@ const openNotificationWithIcon = (type) => {
     notification[type](config[type]);
 };
 
-const deleteAllNotification= (type) => {
+const deleteAllNotification = (type) => {
 
     const config = {
         'success': {
@@ -48,16 +48,18 @@ const UploadExcels = () => {
 
     const [loadings, setLoadings] = useState([])
 
-    const [date,setDate] = useState()
+    const [date, setDate] = useState([])
 
-    const onClick = (index) => {
+    const [dimension, setDimension] = useState(1)
+
+    const onClick = (index, func, data) => {
         setLoadings((prevLoadings) => {
             const newLoadings = [...prevLoadings];
             newLoadings[index] = true;
             return newLoadings;
         });
 
-        statistic(date).then((response) => {
+        func(data).then((response) => {
             openNotificationWithIcon('success')
         }).catch((error) => {
             openNotificationWithIcon('error')
@@ -73,8 +75,12 @@ const UploadExcels = () => {
 
     }
 
-    const dateChange = (date, dateString) => {
-        setDate(dateString)
+    const dateChange = (date, dateString, index) => {
+        setDate((prev) => {
+            const newDates = [...prev];
+            newDates[index] = dateString;
+            return newDates;
+        })
     }
 
     const deleteAll = (index) => {
@@ -86,7 +92,7 @@ const UploadExcels = () => {
 
 
         deleteAllData().then((response) => {
-            if(response.data==true)
+            if (response.data == true)
                 deleteAllNotification('success')
             else
                 deleteAllNotification('error')
@@ -103,9 +109,15 @@ const UploadExcels = () => {
         })
     }
 
+    const dimensionChange = (e) => {
+        setDimension(e.target.value);
+    }
+
+
+
     return (
 
-        <div style={{ backgroundColor: "#fff",height: "100%", width: "50vw", padding: "5vw" }}>
+        <div style={{ backgroundColor: "#fff", height: "100%", width: "50vw", padding: "5vw" }}>
             <Space
                 direction="vertical"
                 size="large"
@@ -128,15 +140,33 @@ const UploadExcels = () => {
                         <span style={{ fontWeight: 600 }}>进行薪酬数据统计并导出:</span>
                     </Space>
                     <Space direction="vertical" size="middle">
-                        <DatePicker onChange={dateChange} picker="year" />
+                        <DatePicker onChange={(date, dateString) => dateChange(date, dateString, 0)} picker="year" />
                         <div className="statistic-button">
                             <Button type="primary" icon={<DownloadOutlined />} size={"middle"}
-                                onClick={() => onClick(1)} loading={loadings[1]}>
+                                onClick={() => onClick(1, statistic, date[0])} loading={loadings[1]}>
                                 导出统计数据
                             </Button>
                         </div>
                     </Space>
-
+                </Space>
+                <Space direction="horizontal" align="start" size="middle">
+                    <Space>
+                        <span style={{ fontWeight: 600 }}>从不同维度对薪酬统计数据进行拆分并导出:</span>
+                    </Space>
+                    <Space direction="vertical" size="middle">
+                        <DatePicker onChange={(date, dateString) => dateChange(date, dateString, 1)} picker="year" />
+                        <Radio.Group onChange={dimensionChange} value={dimension}>
+                            <Radio value={1}>所属一级部门</Radio>
+                            <Radio value={2}>岗位</Radio>
+                        </Radio.Group>
+                        <div className="statistic-button">
+                            <Button type="primary" icon={<DownloadOutlined />} size={"middle"}
+                                onClick={() => onClick(2, splitStatistic, { 'year': date[1], 'dimension': dimension })}
+                                loading={loadings[2]}>
+                                导出拆分后的数据
+                            </Button>
+                        </div>
+                    </Space>
                 </Space>
             </Space>
         </div >

@@ -13,3 +13,13 @@ export function uploadExcel(type){
         method: 'post'
     })
 }
+
+export function splitStatistic(data){
+  return request({
+    url:'/salaryStatistics/'+data.year+'/statistic/split',
+    method:'put',
+    params: {
+      dimension: data.dimension
+    }
+  })
+}
