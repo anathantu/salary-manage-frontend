@@ -59,6 +59,7 @@ class SalaryForm extends React.Component {
             <Option value="providentFund">公积金</Option>
             <Option value="suppleMedical">补充医疗</Option>
             <Option value="susidy">津贴（劳保费、探亲补助、图书费、稳岗补贴抵扣和餐补）</Option>
+            <Option value="salaryStatistics">员工薪资合计明细表</Option>
           </Select>
         </Form.Item>
         <Form.Item
